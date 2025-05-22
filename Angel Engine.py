@@ -1,6 +1,6 @@
 
 import tkinter as tk
-
+#SOU GAY
 # Importações seguras de ASCII
 try:
     from Imagens.Imagem_anjo import ascii_anjo
