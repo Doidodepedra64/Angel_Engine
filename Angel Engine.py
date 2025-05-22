@@ -1,14 +1,17 @@
-#import pygame
+import pygame
 import tkinter as tk
 
-#pygame.mixer.init()
-#sound_path = r'D:/Programa/AngelEngine/BlackWeald - Astral Chasm _ Dark Ambient Horror Soundscape [jJS-1mtZHIc].mp3'
-#pygame.mixer.music.load(sound_path)
-#pygame.mixer.music.play(-1)
+pygame.mixer.init()
+sound_path = r'D:/Programa/AngelEngine/BlackWeald - Astral Chasm _ Dark Ambient Horror Soundscape [jJS-1mtZHIc].mp3'
+pygame.mixer.music.load(sound_path)
+pygame.mixer.music.play(-1)
+#PROBLEMA: se o dispositivos não tiver o pygame baixado ele não roda a musica!!!!
 
 try:
-    from Imagens.Imagem_anjo import ascii_anjo
-    from Imagens.Demon import ascii_demon
+    from titulos.SHC import ascii_SHC
+    from Imagens.Anjo import ascii_anjo
+    from Imagens.Anjo2 import ascii_demon
+    from Imagens.Anjo3 import ascii_Anjo3
     from Imagens.Presidente import ascii_presidente
     from titulos.Confinado import ascii_confinado
     from Imagens.Doutor import ascii_doutor
@@ -103,12 +106,16 @@ class AngelEngineGUI:
         self.limpar_interface()
         self.escrever(
             'Ao acordar, o som do despertador invade seus sentidos por alguns segundos.'
-            '\nUma estranha sensação de que cada movimento seu está sendo julgado te afoga. Você se levanta, exausto, ainda preso às imagens da noite passada'
-            '\nFora de casa, o mundo te recebe do jeito que ele se tornou, o céu escuro coberto pela fumaças das Fábricas que Nunca Param, as ruas lotadas de lixo e de corpos de "Indignos", pessoas que os religiosos achavam ser pecadores'
+            '\nUma estranha sensação de que cada movimento seu está sendo julgado te afoga. Você se levanta, exausto, ainda preso às imagens da noite passada')
+        self.adicionar_botao("Sair de casa", self.Sair_de_Casa)
+        
+    def Sair_de_Casa(self):
+        self.limpar_interface()
+        self.escrever('Fora de casa, o mundo te recebe do jeito que ele se tornou, o céu escuro coberto pela fumaças das Fábricas que Nunca Param, as ruas lotadas de lixo e de corpos de "Indignos", pessoas que os religiosos achavam ser pecadores.'
             '\nFechando a porta de casa, seu caminho será como nos outros dias, desafiador, mas isso não importa mais.'
             '\nNunca importou.')
-        self.adicionar_botao("Seguir o caminho", self.terra_sagrada)
-        
+        self.adicionar_botao('Seguir o caminho indicado', self.terra_sagrada)
+        self.adicionar_botao('Esquecer de tudo isso e ir trabalhar', self.ir_trabalhar)
 
     def terra_sagrada(self):
         self.limpar_interface()
@@ -146,17 +153,32 @@ class AngelEngineGUI:
         self.escrever(ascii_Observadora)
         self.escrever('Ignorando o ambiente se escurecendo, você continua a caminhar em direção a Máquina de anjos, o cansaço quase vence do seu corpo, quando você finalmente se encontra cara a cara com as grandes portas que bloqueiam a passagem para entrar na Máquina de anjos.\n' \
         'Você começa a procurar por uma maneira de entrar, quando derepente de tráz da Máquina de Anjos, você uma figura surgindo, ciculando a estrutura que a mantém presa por uma corrente, porém isso não há impede de perceber a sua presença...')
-
         self.adicionar_botao('Sair correndo', self.correr)
         self.adicionar_botao('Fechar os olhos e tapar os ouvidos', self.se_proteger)
 
     def correr(self):
         self.limpar_interface()
-        self.escrever('Penis')
+        self.escrever('Se virando rápidamente antes que a criatura possa abrir seus olhos, Você junta forças sobrehumanas e sai correndo. A sensação de estar sendo perseguido te acompanha até conseguir se esconder em um espinhos próximo da Máquina de anjos.\n'
+        'Hiperventilando, você se escora em um dos espinhos. Quando você olha de volta para a criatura...')
+        self.adicionar_botao('- Ela não....estava ali?', self.fim_observadora)
 
     def se_proteger(self):
         self.limpar_interface
-        self.escrever('Cu')
+        self.escrever('Você cobre suas orelhas e fecha seus olhos da melhor maneira que pode, seus batimentos acelerados é a unica coisa que você escuta.')
+        self.adicionar_botao('Abrir os olhos', self.fim_observadora2)
+        self.adicionar_botao('Manter eles fechados', lambda: self.escrever('Mentendo suas orelhas e olhos fechados, seus batimentos acelerados é a unica coisa que você escuta.'))
+
+    def fim_observadora(self):
+        self.limpar_interface()
+        self.escrever(ascii_SHC)
+        self.escrever("Quando você fala isso é agarrado imediatamente pela criatura, abrindo um grande sorriso enquanto seus grandes olhos cruzam com os seus, fazendo suas pupilas fritarem em uma dor insuportável que se espalha pelo seu corpo inteiro...")
+        self.adicionar_botao("Voltar ao menu", self.exibir_titulo)
+
+    def fim_observadora2(self):
+        self.limpar_interface()
+        self.escrever(ascii_SHC)
+        self.escrever('Você abre seus olhos, na esperança que a criatura tenha sumido, apenas para dar de cara com grandes olhos que cruzam com os seus, fazendo suas pupilas fritarem em uma dor insuportável que se espalha pelo seu corpo inteiro... ')
+        self.adicionar_botao("Voltar ao menu", self.exibir_titulo)
 
     def sonho(self):
         self.limpar_interface()
@@ -181,9 +203,9 @@ class AngelEngineGUI:
 
     def fim_egoismo(self):
         self.limpar_interface()
-        self.escrever('*A figura parece descepcionada, em um movimento ela te agarra, ficando frente a frente com sua persona do sonho*\n'
-                    'Não é a toa que seu mundo se encontra nesse estado, seus pensamentos em adquirir poder sobrepõem totalmente sua fé, sua humanidade é corrupta e pagãos não serão perdoados, não mais.\n'
-                    '*Você sente uma onda de pressão, onde suas memórias vão sendo lentamente apagadas, destruídas, consumidas, enquanto a criatura te encara com um sorriso gentil, sabendo que seu destino é se tornar mais um…*')
+        self.escrever('A figura parece descepcionada, em um movimento ela te agarra, ficando frente a frente com sua persona do sonho\n'
+                    '- Não é a toa que seu mundo se encontra nesse estado, seus pensamentos em adquirir poder sobrepõem totalmente sua fé, sua humanidade é corrupta e pagãos não serão perdoados, não mais.\n'
+                    'Você sente uma onda de pressão, onde suas memórias vão sendo lentamente apagadas, destruídas, consumidas, enquanto a criatura te encara com um sorriso gentil, sabendo que seu destino é se tornar mais um…')
         self.adicionar_botao("Esquecido", self.esquecido)
     
     def esquecido(self):
@@ -211,11 +233,25 @@ class AngelEngineGUI:
         self.limpar_interface()
         self.escrever('Com seus sentidos perturbados pela presença da figura, você decide ignorar o chamado e acordar.\n'
                     'Ao acordar, o som do despertador inibe seus sentidos por alguns segundos. A sensação de que cada ação sua está sendo julgado te afoga, enquanto você se levanta cansado, ainda pensando sobre oque sonhou na noite passada.')
-               
+        self.adicionar_botao('penis ainda não fiz isso', self.caminho2)#PAREI AQUI CACETE
+        self.adicionar_botao('Sair de casa', self.Sair_de_Casa2)
+    
+    def Sair_de_Casa2(self):
+        self.limpar_interface()
+        self.escrever('Fora de casa, o mundo te recebe do jeito que ele se tornou, o céu escuro coberto pela fumaças das Fábricas que Nunca Param, as ruas lotadas de lixo e de corpos de "Indignos", pessoas que os religiosos achavam ser pecadores.'
+            '\nFechando a porta de casa, seu caminho será como nos outros dias, desafiador, mas isso não importa mais.'
+            '\nNunca importou.')
+        self.adicionar_botao('Ir trabalhar', self.ir_trabalhar)
+        self.adicionar_botao('Regredir e escutar o Anjo', self.regredir)
 
-
-
-
+    def ir_trabalhar(self):
+        self.limpar_interface()
+        self.escrever('Bora trabaiaaaaaaaaa')
+    
+    def regredir(self):
+        self.limpar_interface()
+        self.escrever('Você decide ajudar o anjo, se entregrando a aquela pressão estranha que ele fazia...')
+        self.adicionar_botao('Ouvir oque ele tem pra dizer', self.conversa_anjo)
 
 
 
