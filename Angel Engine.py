@@ -1,7 +1,11 @@
-
+#import pygame
 import tkinter as tk
-#SOU GAY
-# Importações seguras de ASCII
+
+#pygame.mixer.init()
+#sound_path = r'D:/Programa/AngelEngine/BlackWeald - Astral Chasm _ Dark Ambient Horror Soundscape [jJS-1mtZHIc].mp3'
+#pygame.mixer.music.load(sound_path)
+#pygame.mixer.music.play(-1)
+
 try:
     from Imagens.Imagem_anjo import ascii_anjo
     from Imagens.Demon import ascii_demon
@@ -63,7 +67,7 @@ class AngelEngineGUI:
 
     def conversa_anjo(self):
         self.limpar_interface()
-        self.escrever(ascii_esquecido)
+        self.escrever(ascii_anjo)
         self.escrever(
             '*(?????)*'
             '\n — "Dizem que os anjos descem à Terra para resgatar os pecadores.'
@@ -71,21 +75,16 @@ class AngelEngineGUI:
             '\n Mas o que acontece quando a sede por poder se torna mais forte que a fé na redenção?'
             '\n EU sei a resposta. Encontre-me... e descubra a verdade." —'
         )
-        self.adicionar_botao("Seguir seus instintos curiosos", self.dialogo_inicial)
-        self.adicionar_botao("Se manter na sombra do desconhecido", self.final_sombra)
+        self.adicionar_botao("Seguir seus instintos curiosos", self.caminho1)
+        self.adicionar_botao("Se manter na sombra do desconhecido", self.caminho2)
     
-    def dialogo_inicial(self):
+    def caminho1(self):
         self.limpar_interface()
         self.escrever(ascii_anjo)
-        self.adicionar_botao("O que você quer de mim?", lambda: self.mensagem("Me ajude, Me ajude, Me ajude, e sua recompensa será virtuosa", self.dialogo_inicial))
-        self.adicionar_botao("Quem é você?", lambda: self.mensagem("Eu já fui a última esperança, desci dos céus para ajudar a todos, livrá-los de seus pecados", self.dialogo_inicial))
-        self.adicionar_botao("Por que não me fala agora?", lambda: self.mensagem("... *a figura não responde, um silêncio mortal toma conta da sua mente...*", self.dialogo_inicial))
+        self.adicionar_botao("O que você quer de mim?", lambda: self.mensagem("Me ajude, Me ajude, Me ajude, e sua recompensa será virtuosa", self.caminho1))
+        self.adicionar_botao("Quem é você?", lambda: self.mensagem("Eu já fui a última esperança, desci dos céus para ajudar a todos, livrá-los de seus pecados", self.caminho1))
+        self.adicionar_botao("Por que não me fala agora?", lambda: self.mensagem("... *a figura não responde, um silêncio mortal toma conta da sua mente...*", self.caminho1))
         self.adicionar_botao("Aonde devo ir?", self.tutorial_angel_engine)
-
-    def final_sombra(self):
-        self.limpar_interface()
-        self.escrever("Você decide ignorar o chamado.\n" + ascii_medroso)
-        self.adicionar_botao("Voltar ao menu", self.exibir_titulo)
 
     def tutorial_angel_engine(self):
         self.limpar_interface()
@@ -122,32 +121,42 @@ class AngelEngineGUI:
     
     def caminho_cansado(self):
         self.limpar_interface()
-        self.escrever('Você continua a caminhar, seu cansaço torna seus passos mais pesados, como se seus ossos fossem feitos de pedra e o mundo estivesse empurrando você de volta. O chão seco da Terra Sagrada range sob seus pés, coberto por espinhos negros que se erguem como nervuras de um corpo moribundo.'
+        self.escrever('Seguindo seu rumo, o cansaço torna seus passos mais pesados, como se seus ossos fossem feitos de pedra e o mundo estivesse empurrando você de volta. O chão seco da Terra Sagrada range sob seus pés, coberto por espinhos negros que se erguem como nervuras de um corpo moribundo.'
                     'Eles não se movem. Eles não têm vida. Você repete isso mentalmente. Mas, a cada passo, você jura que um ou dois estão mais próximos — como se crescessem atrás de você.'
                     'Ao longe, é possível ver uma estrutura impossível, erguida de maneira que desafia as leis da física, guardando a única esperança da humanidade: a Máquina de Anjos')
         
-        self.adicionar_botao('Seguir o caminho até a Máquina de anjos', self.observadora)
-        self.adicionar_botao('Procurar um lugar para descançar', self.sonho)
-    
-    def observadora(self):
-        self.limpar_interface()
-        self.escrever('Você continuar a caminhar em direção a máquina de anjos, desesperado para cumprir a sua missão, a cada passo dado mais seus movimentos se tornam mais atrapalhados.\n' 
-                    'O sol lentamente começa a cair, e a escuridão vai tomando conta, você começa a ter dificuldade de enchergar a direção de onde está indo.' 
-                    'A medida que se avança em direção a Máquina de Anjos, você pode ver ao lado uma grande cratera, onde você consegue observar uma criatura de joelhos rezando, no centro dela.')
-        
-        self.adicionar_botao('Continuar a caminhar', self.fim_desprotegido) 
+        self.adicionar_botao('Seguir o caminho até a Máquina de anjos', self.caminho_cansado2)
         self.adicionar_botao('Procurar um lugar para descançar', self.local_descanco)
     
-    def local_descanco(self):
-        self.escrever("penis")
-
-
-    def fim_desprotegido(self):
+    def caminho_cansado2(self):
         self.limpar_interface()
-        self.escrever('Ignorando o ambiente se escurecendo, você continua a caminhar em direção a Máquina de anjos, o cansaço quase vence do seu corpo, quando você finalmente se encontra cara a cara com as grandes portas que bloqueiam a passagem para entrar na Máquina de anjos.\n' \
-        'Você começa a procurar por uma maneira de entrar, quando derepente de tráz da Máquina de Anjos, você uma figura surgindo, ciculando a estrutura que a mantém presa por uma corrente, porém isso não há impede de perceber a sua presença, onde sua presença faz seus olhos derreterem, deixando como a ultima coisa que vocë escuta sendo um grito de uma mulher distorcida.')
+        self.escrever('Você continuar a caminhar em direção a máquina de anjos, desesperado para cumprir a sua missão, a cada passo dado torna seus movimentos mais atrapalhados.\n' 
+                    'O sol lentamente começa a cair, e a escuridão vai tomando conta, você começa a ter dificuldade de enchergar a direção de onde está indo.' 
+                    'A medida que se avança em direção a Máquina de Anjos, você pode ver ao lado uma grande cratera, onde você consegue observar, no centro dela, uma criatura de joelhos rezando.')
+        
+        self.adicionar_botao('Continuar a caminhar', self.observadora) 
+        self.adicionar_botao('Descançar', self.local_descanco)
+
+    def local_descanco(self):
+        self.limpar_interface()
+        self.escrever('Com as pernas dormentes, você observa o caminho.')
+
+    def observadora(self):
+        self.limpar_interface()
         self.escrever(ascii_Observadora)
-                      
+        self.escrever('Ignorando o ambiente se escurecendo, você continua a caminhar em direção a Máquina de anjos, o cansaço quase vence do seu corpo, quando você finalmente se encontra cara a cara com as grandes portas que bloqueiam a passagem para entrar na Máquina de anjos.\n' \
+        'Você começa a procurar por uma maneira de entrar, quando derepente de tráz da Máquina de Anjos, você uma figura surgindo, ciculando a estrutura que a mantém presa por uma corrente, porém isso não há impede de perceber a sua presença...')
+
+        self.adicionar_botao('Sair correndo', self.correr)
+        self.adicionar_botao('Fechar os olhos e tapar os ouvidos', self.se_proteger)
+
+    def correr(self):
+        self.limpar_interface()
+        self.escrever('Penis')
+
+    def se_proteger(self):
+        self.limpar_interface
+        self.escrever('Cu')
 
     def sonho(self):
         self.limpar_interface()
@@ -188,7 +197,7 @@ class AngelEngineGUI:
         self.adicionar_botao("Voltar", proximo_estado)
 
     def maquina_anjos(self):
-        self.limpar_interface
+        self.limpar_interface()
         self.escrever('Como chegar na Máquina de Anjos:\n'
                     'Passo 1: Pacote suprimentos suficientes. Não haverá nenhum.\n'
                     'Passo 2: Não deixe que os esquecidos te encontrem. Eles não levam gentilmente a estrangeiros.\n'
@@ -196,6 +205,18 @@ class AngelEngineGUI:
         
         self.adicionar_botao("Acordar", self.dia2)
         self.adicionar_botao("Voltar", self.sonho)
+
+
+    def caminho2(self):
+        self.limpar_interface()
+        self.escrever('Com seus sentidos perturbados pela presença da figura, você decide ignorar o chamado e acordar.\n'
+                    'Ao acordar, o som do despertador inibe seus sentidos por alguns segundos. A sensação de que cada ação sua está sendo julgado te afoga, enquanto você se levanta cansado, ainda pensando sobre oque sonhou na noite passada.')
+               
+
+
+
+
+
 
 
 if __name__ == "__main__":
