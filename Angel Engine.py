@@ -1,11 +1,22 @@
+from tkinter import ttk
 import pygame
 import tkinter as tk
 
 pygame.mixer.init()
-sound_path = r'D:/Programa/AngelEngine/BlackWeald - Astral Chasm _ Dark Ambient Horror Soundscape [jJS-1mtZHIc].mp3'
-pygame.mixer.music.load(sound_path)
-pygame.mixer.music.play(-1)
+#sound_path = r'C:\Users\HENRYGABRIELDASILVEI\Downloads\Angel_Engine-main\somebody-once-told-me-made-with-Voicemod.mp3'
+#pygame.mixer.music.load(sound_path)
+#pygame.mixer.music.play(-1)
 #PROBLEMA: se o dispositivos não tiver o pygame baixado ele não roda a musica!!!!
+
+click_sound = None
+try:
+   click_sound = pygame.mixer.Sound()  # coloque aqui o caminho certo do seu arquivo de clique
+except Exception as e:
+    print(f"Erro ao carregar som de clique: {e}")
+
+def play_click_sound():
+    if click_sound:
+        click_sound.play()
 
 try:
     from titulos.SHC import ascii_SHC
@@ -35,6 +46,20 @@ class AngelEngineGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Angel Engine")
+        self.fullscreen = True
+        self.root.attributes('-fullscreen', self.fullscreen)
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("TButton",
+                        font=("JetBrains Mono", 12, "bold"),
+                        padding=5,
+                        width=50,
+                        foreground="white",
+                        background="#333",
+                        borderwidth=10)
+        style.map("TButton",
+                  foreground=[('pressed', 'white'), ('active', 'white')],
+                  background=[('pressed', '#555'), ('active', '#555')])
         self.texto_principal = tk.Text(root, wrap="word", bg="black", fg="white", font=("Courier", 11))
         self.texto_principal.pack(expand=True, fill=tk.BOTH)
         self.botoes_frame = tk.Frame(root, bg="black")
@@ -46,13 +71,28 @@ class AngelEngineGUI:
         for widget in self.botoes_frame.winfo_children():
             widget.destroy()
 
+    def alternar_fullscreen(self):
+        self.fullscreen = not self.fullscreen
+        self.root.attributes('-fullscreen', self.fullscreen)
+
     def escrever(self, texto):
         if texto:
             self.texto_principal.insert(tk.END, texto + "\n")
             self.texto_principal.see(tk.END)
 
     def adicionar_botao(self, texto, comando):
-        tk.Button(self.botoes_frame, text=texto, command=comando, width=50).pack(pady=2)
+        def comando_com_som():
+            play_click_sound()
+            comando()
+        btn = ttk.Button(self.botoes_frame, text=texto, command=comando_com_som)
+        btn.pack(pady=5, padx=10, fill='x')
+
+    def adicionar_botao_lado(self, texto, comando):
+        def comando_com_som():
+            play_click_sound()
+            comando()
+        btn = ttk.Button(self.botoes_frame, text=texto, command=comando_com_som)
+        btn.pack(side="left", padx=5, pady=5)
 
     def exibir_titulo(self):
         self.limpar_interface()
