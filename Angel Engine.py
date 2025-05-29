@@ -3,28 +3,27 @@ import pygame
 import tkinter as tk
 pygame.mixer.init()
 
-#SOU GAY
 
-#def tocar_musica(cenario):
-#    pygame.mixer.music.stop()
-#    pygame.mixer.music.load(musicas[cenario])
-#    pygame.mixer.music.play(-1) 
+def tocar_musica(cenario):
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load(musicas[cenario])
+    pygame.mixer.music.play(-1) 
 
-#musicas = {
-#    "introducao": r'D:\Programa\AngelEngine\Angel_Engine-main\Passado Misterioso [NGCtEepSTJI].mp3',
-#    "acordar": r'D:\Programa\AngelEngine\Angel_Engine-main\BlackWeald - Astral Chasm _ Dark Ambient Horror Soundscape [jJS-1mtZHIc].mp3',
-#    "terra_sagrada": r'D:\Programa\AngelEngine\Angel_Engine-main\Encontrei Algo Aqui_ [WkSbALPTcuQ].mp3'
-#}
+musicas = {
+    "introducao": r'D:\Programa\AngelEngine\Angel_Engine-main\Outros\Passado Misterioso [NGCtEepSTJI].mp3',
+    "acordar": r'D:\Programa\AngelEngine\Angel_Engine-main\Outros\BlackWeald - Astral Chasm _ Dark Ambient Horror Soundscape [jJS-1mtZHIc].mp3',
+    "terra_sagrada": r'D:\Programa\AngelEngine\Angel_Engine-main\Outros\Encontrei Algo Aqui_ [WkSbALPTcuQ].mp3'
+}
 
-#click_sound = None
-#try:
-#   click_sound = pygame.mixer.Sound()  # coloque aqui o caminho certo do seu arquivo de clique
-#except Exception as e:
-#    print(f"Erro ao carregar som de clique: {e}")
+click_sound = None
+try:
+   click_sound = pygame.mixer.Sound()  # coloque aqui o caminho certo do seu arquivo de clique
+except Exception as e:
+    print(f"Erro ao carregar som de clique: {e}")
 
-#def play_click_sound():
-#    if click_sound:
-#        click_sound.play()
+def play_click_sound():
+    if click_sound:
+        click_sound.play()
 
 try:
     from titulos.SHC import ascii_SHC
@@ -45,10 +44,11 @@ try:
     from titulos.Euxarido import ascii_Euxarido
     from Imagens.Observadora import ascii_Observadora
     from Imagens.esquecido import ascii_esquecido
+    from Imagens.gato import ascii_Gato
 except ImportError:
     ascii_anjo = ascii_demon = ascii_presidente = ascii_confinado = ascii_doutor = ascii_esquecido = ""
     ascii_fugitivo = ascii_medroso = ascii_patria = ascii_terra = ascii_sonho = ascii_transtornado = ""
-    ascii_titulo = ascii_Euxarido = ascii_maquinaAnjo = ascii_Observadora = ""
+    ascii_titulo = ascii_Euxarido = ascii_maquinaAnjo = ascii_Observadora = ascii_Gato = ""
 
 class AngelEngineGUI:
     def __init__(self, root):
@@ -73,6 +73,7 @@ class AngelEngineGUI:
         self.botoes_frame = tk.Frame(root, bg="black")
         self.botoes_frame.pack(fill=tk.X)
         self.exibir_titulo()
+        self.item_escolhido = None
 
     def limpar_interface(self):
         self.texto_principal.delete(1.0, tk.END)
@@ -97,14 +98,14 @@ class AngelEngineGUI:
 
     def adicionar_botao(self, texto, comando):
         def comando_com_som():
-            #play_click_sound()
+            play_click_sound()
             comando()
         btn = ttk.Button(self.botoes_frame, text=texto, command=comando_com_som)
         btn.pack(pady=5, padx=10, fill='x')
 
     def adicionar_botao_lado(self, texto, comando):
         def comando_com_som():
-            #play_click_sound()
+            play_click_sound()
             comando()
         btn = ttk.Button(self.botoes_frame, text=texto, command=comando_com_som)
         btn.pack(side="left", padx=5, pady=5)
@@ -114,7 +115,7 @@ class AngelEngineGUI:
         self.escrever_ascii(ascii_titulo)
         self.adicionar_botao("Iniciar Experiência", self.introducao)
         self.adicionar_botao("Sair do jogo", self.root.destroy)
-        #tocar_musica("introducao")
+        tocar_musica("introducao")
 
 
     def introducao(self):
@@ -130,13 +131,18 @@ class AngelEngineGUI:
         self.escrever_ascii(ascii_anjo)
         self.escrever(
             '*(?????)*'
-            '\n— "Dizem que os anjos descem à Terra para resgatar os pecadores.'
-            '\nEm momentos de desespero, as pessoas rezam, pedem, imploram por uma salvação divina.'
-            '\nMas o que acontece quando a sede por poder se torna mais forte que a fé na redenção?'
-            '\nEU sei a resposta. Encontre-me... e descubra a verdade.'
+            '— "Dizem que os anjos descem à Terra para resgatar os pecadores.'
+            'Em momentos de desespero, as pessoas rezam, pedem, imploram por uma salvação divina.'
+            'Mas o que acontece quando a sede por poder se torna mais forte que a fé na redenção?'
+            'EU sei a resposta. Encontre-me... e descubra a verdade." —'
         )
         self.adicionar_botao("Seguir seus instintos curiosos", self.caminho1)
         self.adicionar_botao("Se manter na sombra do desconhecido", self.caminho2)
+        self.adicionar_botao('vai filha da puta', self.cu)
+
+    def cu(self):
+        self.limpar_interface()
+        self.escrever_ascii(ascii_Gato)
     
     def caminho1(self):
         self.limpar_interface()
@@ -150,12 +156,12 @@ class AngelEngineGUI:
         self.limpar_interface()
         self.escrever(
             '*A figura parece sorrir, mesmo com o rosto completamente desfigurado.*'
-            '\nTutorial para encontrar a Angel Engine:'
-            '\nEtapa Um: Viaje até a Terra Sagrada.'
-            '\nEtapa Dois: Procure, no terreno desolado, pelos grandes espinhos.'
-            '\nEtapa Três: Encontre meu sarcófago.'
-            '\nEtapa Quatro: Olhe para mim. Olhe para mim. Olhe para mim... e liberte-me.'
-            '\n*Após alguns segundos de silêncio, você sente seu corpo sendo arrancado do sonho à força.*'
+            '- Tutorial para encontrar a Angel Engine:'
+            'Etapa Um: Viaje até a Terra Sagrada.'
+            'Etapa Dois: Procure, no terreno desolado, pelos grandes espinhos.'
+            'Etapa Três: Encontre meu sarcófago.'
+            'Etapa Quatro: Olhe para mim. Olhe para mim. Olhe para mim... e liberte-me.'
+            'Após alguns segundos de silêncio, você sente seu corpo sendo arrancado do sonho à força.'
         )
         self.adicionar_botao("Acordar", self.acordar)
 
@@ -165,38 +171,41 @@ class AngelEngineGUI:
             'Ao acordar, o som do despertador invade seus sentidos por alguns segundos.'
             '\nUma estranha sensação de que cada movimento seu está sendo julgado te afoga. Você se levanta, exausto, ainda preso às imagens da noite passada')
         self.adicionar_botao("Sair de casa", self.Sair_de_Casa)
-        #tocar_musica("acordar")
+        tocar_musica("acordar")
         
     def Sair_de_Casa(self):
         self.limpar_interface()
         self.escrever('Fora de casa, o mundo te recebe do jeito que ele se tornou, o céu escuro coberto pela fumaças das Fábricas que Nunca Param, as ruas lotadas de lixo e de corpos de "Indignos", pessoas que os religiosos achavam ser pecadores.'
             '\nFechando a porta de casa, seu caminho será como nos outros dias, desafiador, mas isso não importa mais.'
             '\nNunca importou.')
-        self.adicionar_botao('Arrumar sua casa', self.escolher_item)
+        
+    #    self.adicionar_botao('Arrumar sua casa', self.escolher_item)
         self.adicionar_botao('Seguir o caminho indicado', self.terra_sagrada)
         self.adicionar_botao('Esquecer de tudo isso e ir trabalhar', self.ir_trabalhar)
         
 
-    def escolher_item(self):
-        self.limpar_interface()
-        self.escrever('Sua casa sempre foi bagunçada, suas roupas estendidas na cadeira, empilhadas em camadas de dias esquecidos. Há copos com restos de café frio em cantos onde a luz quase não alcança, e um cobertor meio caído do sofá, como se tivesse sido abandonado às pressas.\n' \
-                    'Na bagunça de seu quarto, você encontra um antigo presente dado pela sua mãe, um lido cachecol tricotado por ela mesma usando a mesma estampa brega que ela sempre usou, ao lado dele você vê seu antigo revolver, uma arma leve mas mortal.')
-        self.adicionar_botao('Levar o cachecol', lambda: self.definir_item("Cachecol"))
-        self.adicionar_botao('Levar o revoler', lambda: self.definir_item("Revolver"))
+    #def escolher_item(self):
+    #    self.limpar_interface()
+    #    self.escrever('Sua casa sempre foi bagunçada, suas roupas estendidas na cadeira, empilhadas em camadas de dias esquecidos. Há copos com restos de café frio em cantos onde a luz quase não alcança, e um cobertor meio caído do sofá, como se tivesse sido abandonado às pressas.\n' \
+    #                'Na bagunça de seu quarto, você encontra um antigo presente dado pela sua mãe, um lido cachecol tricotado por ela mesma usando a mesma estampa brega que ela sempre usou, ao lado dele você vê seu antigo revolver, uma arma leve mas mortal.')
+    #    self.adicionar_botao('Levar o cachecol', self.definir_item)
+    #    self.adicionar_botao('Levar o revolver', self.definir_item)
 
-    def definir_item(self, item):
-        self.item_escolhido = item
-        self.escrever(f"Você escolheu o {item}. Essa escolha afetará seu caminho.", self.Sair_de_Casa2)
+    #def definir_item(self, item):
+    #    self.item_escolhido = item
+    #    self.limpar_interface()
+    #    self.escrever(f"Você escolheu o {item}. Essa escolha afetará seu caminho.", self.terra_sagrada) 
 
     def terra_sagrada(self):
         self.limpar_interface()
-        self.escrever(ascii_terra)
+        self.escrever_ascii(ascii_terra)
         self.escrever('Você caminha por dias, o cansaço te consome ao longo do caminho, porém de longe você vê, longos empinhos que saem do chão cobrem uma longa paisagem desértica'
                       '\nFinalmente chegando na Terra Sagrada. Deseja descansar?')
-        
+        #if self.item_escolhido("Cachecol"):
+            #self.adicionar_botao('Enrolar o cachecol na sua cabeça', self.)
         self.adicionar_botao("Descansar", self.sonho)
         self.adicionar_botao("Continuar a caminhar", self.caminho_cansado)
-        #tocar_musica("terra_sagrada")
+        tocar_musica("terra_sagrada")
     
     def caminho_cansado(self):
         self.limpar_interface()
@@ -242,13 +251,13 @@ class AngelEngineGUI:
 
     def fim_observadora(self):
         self.limpar_interface()
-        self.escrever(ascii_SHC)
+        self.escrever_ascii(ascii_SHC)
         self.escrever("Quando você fala isso é agarrado imediatamente pela criatura, abrindo um grande sorriso enquanto seus grandes olhos cruzam com os seus, fazendo suas pupilas fritarem em uma dor insuportável que se espalha pelo seu corpo inteiro...")
         self.adicionar_botao("Voltar ao menu", self.exibir_titulo)
 
     def fim_observadora2(self):
         self.limpar_interface()
-        self.escrever(ascii_SHC)
+        self.escrever_ascii(ascii_SHC)
         self.escrever('Você abre seus olhos, na esperança que a criatura tenha sumido, apenas para dar de cara com grandes olhos que cruzam com os seus, fazendo suas pupilas fritarem em uma dor insuportável que se espalha pelo seu corpo inteiro... ')
         self.adicionar_botao("Voltar ao menu", self.exibir_titulo)
 
@@ -307,26 +316,20 @@ class AngelEngineGUI:
                     'Explorar as terras sagradas não é oque você pensava, com seus olhos e ouvidos tapados, a única coisa que você sente são seus paços em uma largo campo de areia, enquanto esbarra nos espinhos longos')
         self.adicionar_botao('Socorro', self.dia2)
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
     def caminho2(self):
         self.limpar_interface()
         self.escrever('Com seus sentidos perturbados pela presença da figura, você decide ignorar o chamado e acordar.\n'
                     'Ao acordar, o som do despertador inibe seus sentidos por alguns segundos. A sensação de que cada ação sua está sendo julgado te afoga, enquanto você se levanta cansado, ainda pensando sobre oque sonhou na noite passada.')
-        self.adicionar_botao('Arrumar a casa', self.escolher_item2)
+    #    self.adicionar_botao('Arrumar a casa', self.escolher_item)
         self.adicionar_botao('Sair de casa', self.Sair_de_Casa2)
 
-    def escolher_item2(self):
-        self.limpar_interface()
-        self.escrever('Sua casa sempre foi bagunçada, suas roupas estendidas na cadeira, empilhadas em camadas de dias esquecidos. Há copos com restos de café frio em cantos onde a luz quase não alcança, e um cobertor meio caído do sofá, como se tivesse sido abandonado às pressas.\n' \
-                  'Na bagunça de seu quarto, você encontra um antigo presente dado pela sua mãe, um lido cachecol tricotado por ela mesma usando a mesma estampa brega que ela sempre usou, ao lado dele você vê seu antigo revolver, uma arma leve mas mortal dada pelo seu pai no dia que você saiu de casa.')
-        
-        self.adicionar_botao('Levar o cachecol', lambda: self.definir_item2("Cachecol"))
-        self.adicionar_botao('Levar o revolver', lambda: self.definir_item2("Revolver"))
+   
 
-    def definir_item2(self, item):
-        self.item_escolhido = item
-        self.escrever(f"Você escolheu o {item}. Essa escolha afetará seu caminho.")
-        self.Sair_de_Casa2()
+    #def definir_item2(self, item):
+    #    self.item_escolhido = item
+    #    self.escrever(f"Você escolheu o {item}. Essa escolha afetará seu caminho.")
+    #    self.adicionar_botao("")
 
     
     def Sair_de_Casa2(self):
@@ -346,6 +349,7 @@ class AngelEngineGUI:
         self.limpar_interface()
         self.escrever('Você decide ajudar o anjo, se entregrando a aquela pressão estranha que ele fazia...')
         self.adicionar_botao('Ouvir oque ele tem pra dizer', self.caminho1)
+        
 
 
 
